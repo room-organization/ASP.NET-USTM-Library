@@ -1,0 +1,85 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model bibliography
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+@{
+	ViewData["Title"] = "Details";
+}
+
+<section id="livro" class="padding ">
+	<div class="container">
+		<img src="@Model.PicUrl" class="left">
+
+		<h2>@Html.DisplayFor(book => book.Title)</h2>
+		<h4>Ficha Técnica:</h4>
+
+		<ul>
+			<li>Autor(a): <b>@Html.DisplayFor(book => book.Author)</b></li>
+			<li>Páginas: <b>@Html.DisplayFor(book => book.Pages)</b></li>
+			<li>Editora <b>@Model.PublishingCompany</b></a>
+			<li>Ano de Lançamento: <b>@Html.DisplayFor(book => book.Year)</b></li>
+			<li>ISBN: <b>@Html.DisplayFor(book => book.ISBN)</b></li>
+			<li>Assunto: <b>@Html.DisplayFor(book => book.Category)</b>
+		</ul>
+
+		<h3>Sinopse</h3>
+		<p>@Html.DisplayFor(book => book.Description)</p>
+		<a id="reservarBtn" data-bs-toggle="modal" data-bs-target="#reservationModal" class="button">Reservar!</a>
+		<a asp-action="ReadingPage" asp-controller="Home" asp-route-id="@Model.Id" class="button">Ler!</a>
+	</div>
+</section>
+
+
+
+
+
+
+<!-- Modal For reservation-->
+<div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body" id="content">
+				@{
+					string reservationId = ReservationIDGenerator.GenerateReservationId();
+				}
+					<div class="container">
+						<h1>Comprovativo de Reserva</h1>
+						<div class="">
+							<span class="label">Código do Estudante:</span>
+						<span class="value">@((await UserManager.GetUserAsync(User)).UserName)</span>
+						</div>
+						<div class="">
+							<span class="label">Nome do Livro:</span>
+							<span class="value">@Model.Title</span>
+						</div>
+						<div class="">
+							<span class="label">ID da Reserva:</span>
+							<span class="value">@reservationId</span>
+						</div>
+						<hr>
+						<p>
+							Obrigado por efetuar a reserva do livro em nossa biblioteca. Seguem as informações relevantes para sua referência. Certifique-se de apresentar este comprovativo ao retirar o livro.
+						</p>
+						<p>
+							Caso tenha alguma dúvida ou precise de assistência adicional, não hesite em entrar em contato conosco.
+						</p>
+						<p>
+							Agradecemos sua preferência e desejamos uma ótima leitura!
+						</p>
+						<hr>
+						<p>
+							Atenciosamente,<br>
+							USTM_LIBRARY
+						</p>
+					</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="button" data-bs-dismiss="modal">Fechar</button>
+				<button type="button" class="button" id="btn_print">Imprimir</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="clear padding"></div>
+	

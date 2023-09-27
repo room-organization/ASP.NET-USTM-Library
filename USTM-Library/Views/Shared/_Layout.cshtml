@@ -1,0 +1,75 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - USTM_Library</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/USTM_Library.styles.css" asp-append-version="true" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.7.107/build/pdf.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.7.107/web/pdf_viewer.min.css" rel="stylesheet">
+
+</head>
+
+
+<body>
+	<header>
+		<div class="top"></div>
+
+		<nav>
+			<div class="container">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="sobre.html">Sobre Nós</a></li>
+					<li><a href="contato.html">Contato</a></li>
+					<li><a href="login.html">Login</a></li>
+				</ul>
+
+				<div class="search">
+					<form method="GET" action="#">
+						<input type="text" placeholder="Busque um livro...">
+						<input type="submit" value="">
+					</form>
+					<ul class="logger">
+						<li>
+							<a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello,@((await UserManager.GetUserAsync(User)).UserName)</a>
+						</li>
+						<li>
+							<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+								<button class="btn-logout" type="submit">Logout</button>
+							</form>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+			
+		</nav>
+	</header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+  <footer>
+		<div class="container">
+			<span class="left">© 2023 USTM</span>
+			<span class="right">Leia ou Reserve seu livro com maior facilidade!</span>
+		</div>
+	</footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+   
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

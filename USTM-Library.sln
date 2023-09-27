@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USTM-Library", "USTM-Library\USTM-Library.csproj", "{7E2A5E01-2CA4-4B4F-A43B-E7E8E62D7A22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E2A5E01-2CA4-4B4F-A43B-E7E8E62D7A22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E2A5E01-2CA4-4B4F-A43B-E7E8E62D7A22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E2A5E01-2CA4-4B4F-A43B-E7E8E62D7A22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E2A5E01-2CA4-4B4F-A43B-E7E8E62D7A22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {423EFB47-9585-46DA-B2C8-10AB0E3E2905}
+	EndGlobalSection
+EndGlobal
