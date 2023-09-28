@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity;
-@model bibliography
+@model Bibliography
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 @{
@@ -24,7 +24,33 @@
 
 		<h3>Sinopse</h3>
 		<p>@Html.DisplayFor(book => book.Description)</p>
-		<a id="reservarBtn" data-bs-toggle="modal" data-bs-target="#reservationModal" class="button">Reservar!</a>
+		
+		@{
+			string reservationId = ReservationIDGenerator.GenerateReservationId();
+			string studentId = (await UserManager.GetUserAsync(User)).UserName;
+			string title = Model.Title;
+
+			// Criar um objeto Reservation
+			Reservation reservation = new Reservation
+			{
+				Id = reservationId,
+				StudentCode = studentId,
+				BookTitle = title,
+			};
+		}
+
+		<form method="post" asp-controller="Home" asp-action="PostReservation">
+			<input type="hidden" name="Id" value="@reservation.Id" />
+			<input type="hidden" name="StudentCode" value="@reservation.StudentCode" />
+			<input type="hidden" name="BookTitle" value="@reservation.BookTitle" />
+			<a class="button">Reservar no!</a>
+			<button id="reservarBtn" data-bs-toggle="modal" data-bs-target="#reservationModal" type="submit" class="button">Reservar!</button>
+		</form>
+
+
+		
+
+
 		<a asp-action="ReadingPage" asp-controller="Home" asp-route-id="@Model.Id" class="button">Ler!</a>
 	</div>
 </section>
@@ -39,9 +65,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-body" id="content">
-				@{
-					string reservationId = ReservationIDGenerator.GenerateReservationId();
-				}
+				
 					<div class="container">
 						<h1>Comprovativo de Reserva</h1>
 						<div class="">

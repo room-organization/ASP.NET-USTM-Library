@@ -1,6 +1,6 @@
 ﻿namespace USTM_Library.Models
 {
-    public class bibliography
+    public class Bibliography
     {
         public int Id { get; set; }
         public int ISBN { get; set; }
@@ -13,5 +13,9 @@
         public string Description { get; set; }
         public string PicUrl { get; set; }
         public string BookUrl { get; set; }
+
+
+        public static List<Bibliography> bibliographies = null;
+
     }
 }

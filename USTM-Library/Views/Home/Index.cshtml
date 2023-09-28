@@ -1,4 +1,4 @@
-﻿@model IEnumerable<bibliography>
+﻿@model IEnumerable<Bibliography>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -18,7 +18,7 @@
 				<li>
 					<h3>@bibliography.Title</h3>
 					<h4>@bibliography.Author</h4>
-					<a asp-controller="Home" asp-action="Details" asp-route-id="@bibliography.Id">
+					<a asp-controller="Bibliography" asp-action="Details" asp-route-id="@bibliography.Id">
 						<div class="imghover" title="@bibliography.Title"></div>
 						<img src=@bibliography.PicUrl alt="@bibliography.Title">
 					</a>

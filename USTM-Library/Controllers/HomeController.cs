@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Net;
+using System.Text;
 using USTM_Library.Data;
 using USTM_Library.Models;
 
@@ -13,7 +15,6 @@ namespace USTM_Library.Controllers
 
        private readonly string endpoint = "https://localhost:7213/api/Bibliographies";
        private readonly HttpClient client = null;
-		private static List<bibliography> bibliographies = null;
 
 		public HomeController(ILogger<HomeController> logger)
         {
@@ -34,14 +35,14 @@ namespace USTM_Library.Controllers
                      var jsonString = await response.Content.ReadAsStringAsync();
 
                      //converte o json q recebe da api e converte em um objeto
-                     bibliographies = JsonConvert.DeserializeObject<List<bibliography>>(jsonString);
+                     Bibliography.bibliographies = JsonConvert.DeserializeObject<List<Bibliography>>(jsonString);
 
                  }
                  else
                  {
                      ModelState.AddModelError(null, "Erro");
                  }
-                 return View(bibliographies);
+                 return View(Bibliography.bibliographies);
              }
              catch (Exception ex)
              {
@@ -51,29 +52,16 @@ namespace USTM_Library.Controllers
          
 
         }
-        //method to show the details of the book
-		public IActionResult Details(int? id)
-		{
-            bibliography book = null;
-
-			foreach (bibliography b in bibliographies)
-            {
-
-                if(b.Id == id){
-                     book = b;
-				} 
-            }
-            return View(book);
-		}
+      
 
         public IActionResult About()
         {
             return View();
         }  public IActionResult ReadingPage(int? id)
         {
-			bibliography book = null;
+			Bibliography book = null;
 
-			foreach (bibliography b in bibliographies)
+			foreach (Bibliography b in Bibliography.bibliographies)
 			{
 
 				if (b.Id == id)
@@ -88,5 +76,40 @@ namespace USTM_Library.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-    }
+
+
+
+
+		[HttpPost]
+		public async Task<IActionResult> PostReservationAsync([FromForm] Reservation reservation)
+		{
+			// Configure o URL da API Swagger
+			string apiUrl = "https://localhost:7213/api/Reservations";
+			client.BaseAddress = new Uri(apiUrl);
+
+			// Configure os cabeçalhos, como token de autenticação
+			client.DefaultRequestHeaders.Add("Authorization", "Bearer seu-token-de-autenticacao");
+
+			// Converta seu objeto em JSON
+			string jsonData = JsonConvert.SerializeObject(reservation);
+
+			// Configure o conteúdo da solicitação
+			var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+			// Envie a solicitação POST
+			HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+
+			// Verifique a resposta da API (códigos de status, etc.)
+			if (response.IsSuccessStatusCode)
+			{
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return RedirectToAction("About");
+			}
+
+		}
+
+	}
 }
