@@ -57,20 +57,7 @@ namespace USTM_Library.Controllers
         public IActionResult About()
         {
             return View();
-        }  public IActionResult ReadingPage(int? id)
-        {
-			Bibliography book = null;
-
-			foreach (Bibliography b in Bibliography.bibliographies)
-			{
-
-				if (b.Id == id)
-				{
-					book = b;
-				}
-			}
-			return View(book);
-		}
+        }  
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -79,37 +66,6 @@ namespace USTM_Library.Controllers
 
 
 
-
-		[HttpPost]
-		public async Task<IActionResult> PostReservationAsync([FromForm] Reservation reservation)
-		{
-			// Configure o URL da API Swagger
-			string apiUrl = "https://localhost:7213/api/Reservations";
-			client.BaseAddress = new Uri(apiUrl);
-
-			// Configure os cabeçalhos, como token de autenticação
-			client.DefaultRequestHeaders.Add("Authorization", "Bearer seu-token-de-autenticacao");
-
-			// Converta seu objeto em JSON
-			string jsonData = JsonConvert.SerializeObject(reservation);
-
-			// Configure o conteúdo da solicitação
-			var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-			// Envie a solicitação POST
-			HttpResponseMessage response = await client.PostAsync(apiUrl, content);
-
-			// Verifique a resposta da API (códigos de status, etc.)
-			if (response.IsSuccessStatusCode)
-			{
-				return RedirectToAction("Index");
-			}
-			else
-			{
-				return RedirectToAction("About");
-			}
-
-		}
 
 	}
 }

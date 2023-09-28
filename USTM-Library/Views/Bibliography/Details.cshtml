@@ -36,74 +36,21 @@
 				Id = reservationId,
 				StudentCode = studentId,
 				BookTitle = title,
+				date = DateTime.UtcNow,
 			};
 		}
 
-		<form method="post" asp-controller="Home" asp-action="PostReservation">
+		<form method="post" asp-controller="Bibliography" asp-action="PostReservation">
 			<input type="hidden" name="Id" value="@reservation.Id" />
 			<input type="hidden" name="StudentCode" value="@reservation.StudentCode" />
 			<input type="hidden" name="BookTitle" value="@reservation.BookTitle" />
-			<a class="button">Reservar no!</a>
-			<button id="reservarBtn" data-bs-toggle="modal" data-bs-target="#reservationModal" type="submit" class="button">Reservar!</button>
+			<button id="reservarBtn"  type="submit" class="button">Reservar!</button>
 		</form>
 
-
-		
-
-
-		<a asp-action="ReadingPage" asp-controller="Home" asp-route-id="@Model.Id" class="button">Ler!</a>
+		<a asp-action="ReadingPage" asp-controller="Bibliography" asp-route-id="@Model.Id" class="button">Ler!</a>
 	</div>
 </section>
 
-
-
-
-
-
-<!-- Modal For reservation-->
-<div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-body" id="content">
-				
-					<div class="container">
-						<h1>Comprovativo de Reserva</h1>
-						<div class="">
-							<span class="label">Código do Estudante:</span>
-						<span class="value">@((await UserManager.GetUserAsync(User)).UserName)</span>
-						</div>
-						<div class="">
-							<span class="label">Nome do Livro:</span>
-							<span class="value">@Model.Title</span>
-						</div>
-						<div class="">
-							<span class="label">ID da Reserva:</span>
-							<span class="value">@reservationId</span>
-						</div>
-						<hr>
-						<p>
-							Obrigado por efetuar a reserva do livro em nossa biblioteca. Seguem as informações relevantes para sua referência. Certifique-se de apresentar este comprovativo ao retirar o livro.
-						</p>
-						<p>
-							Caso tenha alguma dúvida ou precise de assistência adicional, não hesite em entrar em contato conosco.
-						</p>
-						<p>
-							Agradecemos sua preferência e desejamos uma ótima leitura!
-						</p>
-						<hr>
-						<p>
-							Atenciosamente,<br>
-							USTM_LIBRARY
-						</p>
-					</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="button" data-bs-dismiss="modal">Fechar</button>
-				<button type="button" class="button" id="btn_print">Imprimir</button>
-			</div>
-		</div>
-	</div>
-</div>
 
 <div class="clear padding"></div>
 	
